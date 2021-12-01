@@ -1,8 +1,0 @@
-{
-  "clangd.arguments": ["-log=verbose", "-pretty", "--background-index", "--compile-commands-dir=/path/to/your/compile_commands_dir/"],
-
-  "code-runner.executorMap": {
-      "cpp": "cd $dir && g++ $fileName -o $fileNameWithoutExt.out && start $fileNameWithoutExt.out"
-  }
-
-}
