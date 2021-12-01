@@ -37,12 +37,14 @@ class Sprite {
             sprFile.close();
         }
 
-        void Move(Vector2 pos) {
-
+        void move(Vector2 pos) {
+            pos_ = pos;
+            draw();
         }
 
-        void Resize(Vector2 size) {
-
+        void resize(Vector2 size) {
+            size_ = size;
+            draw();
         }
 
         void draw() {
@@ -105,11 +107,35 @@ class Sprite {
             return scale_;
         }
 
+        Vector2 anchorPoint() {
+            return anchorPoint_;
+        }
+
+        // setters for internal fields
+        void pos(Vector2 newPos) {
+            pos_ = newPos;
+        }
+
+        void size(Vector2 newSize) {
+            size_ = newSize;
+        }
+
+        void scale(Vector2 newScale) {
+            scale_ = newScale;
+        }
+
+        void anchorPoint(Vector2 newAnchorPoint) {
+            anchorPoint_ = newAnchorPoint;
+        }
+
     private:
-        Vector2 pos_, size_, scale_;
+        Vector2 pos_, size_, scale_, anchorPoint_ = Vector2(0.5, 0.5);
         char image[SPRITE_SIZE+1][SPRITE_SIZE+1];
 
         void drawScaledPixel(int x, int y) {
+            x -= SPRITE_SIZE * scale().x() * anchorPoint_.x();
+            y -= SPRITE_SIZE * scale().y() * anchorPoint_.y();
+
             for(int i = 0; i < scale().x(); i++) {
                 for(int j = 0; j < scale().y(); j++) {
                     LCD.DrawPixel(x + i, y + j);
