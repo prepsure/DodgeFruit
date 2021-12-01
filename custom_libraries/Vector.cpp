@@ -50,9 +50,17 @@ class Vector2 {
             return Vector2(scalar * this->x_, scalar * this->y_);
         }
 
+        void operator*=(float scalar) {
+            *this = *this * scalar;
+        }
+
         // overload x * y (element-by-element multiplication)
         Vector2 operator*(const Vector2& that) {
             return Vector2(that.x_ * this->x_, that.y_ * this->y_);
+        }
+
+        void operator*=(const Vector2& that) {
+            *this = *this * that;
         }
 
         // overload a == b
