@@ -18,7 +18,8 @@ int main() {
     LCD.Clear();
 
     // make character
-    Sprite character("smile", Vector2(100, 100), Vector2(3,3));
+    Sprite character("smile");
+    character.scale(3);
     character.anchorPoint(Vector2(0.5, 0.5));
 
     while (1) {
@@ -38,7 +39,7 @@ int main() {
             LCD.Update();
         }
 
-        cout << "not touching" << endl;
+        //cout << "not touching" << endl;
         LCD.Clear();
         LCD.Update();
     }

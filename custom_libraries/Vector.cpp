@@ -27,6 +27,10 @@ class Vector2 {
             return Vector2(this->x_ + that.x_, this->y_ + that.y_);
         }
 
+        void operator+=(const Vector2& that) {
+            *this = *this + that;
+        }
+
         // overload -x
         Vector2 operator-() {
             return Vector2(-(this->x_), -(this->y_));
@@ -37,9 +41,18 @@ class Vector2 {
             return Vector2(this->x_ - that.x_, this->y_ - that.y_);
         }
 
+        void operator-=(const Vector2& that) {
+            *this = *this - that;
+        }
+
         // overload x * a
         Vector2 operator*(float scalar) {
             return Vector2(scalar * this->x_, scalar * this->y_);
+        }
+
+        // overload x * y (element-by-element multiplication)
+        Vector2 operator*(const Vector2& that) {
+            return Vector2(that.x_ * this->x_, that.y_ * this->y_);
         }
 
         // overload a == b

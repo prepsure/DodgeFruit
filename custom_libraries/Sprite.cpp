@@ -20,12 +20,9 @@ using namespace std;
 
 class Sprite {
     public:
-        Sprite(string spriteName, Vector2 pos, Vector2 scale) {
+        Sprite(string spriteName) {
             ifstream sprFile;
             sprFile.open("sprites/" + spriteName + ".dat");
-
-            this->pos_ = pos;
-            this->scale_ = scale;
 
             int lineCount = 0;
             char line[SPRITE_SIZE];
@@ -42,11 +39,6 @@ class Sprite {
             draw();
         }
 
-        void resize(Vector2 size) {
-            size_ = size;
-            draw();
-        }
-
         void draw() {
             for(int i = 0; i < SPRITE_SIZE; i++) {
                 for(int j = 0; j < SPRITE_SIZE; j++) {
@@ -54,6 +46,7 @@ class Sprite {
                     bool transparent = false;
                     int color = 0;
 
+                    // get color based on the character in the array
                     switch (image[j][i]) {
                         case 'B':
                             color = BLACK;
@@ -84,9 +77,10 @@ class Sprite {
                             break;
                     }
 
+                    // draw pixel on the screen
                     if (!transparent) {
                         LCD.SetFontColor(color);
-                        drawScaledPixel(pos().x() + (i * scale().x()), pos().y() + (j * scale().y()));
+                        drawScaledPixel(pos() + Vector2(i, j) * scale());
                     }
 
                 }
@@ -124,21 +118,29 @@ class Sprite {
             scale_ = newScale;
         }
 
+        // extra setter for scale for uniform scaling
+        void scale(int n) {
+            scale(Vector2(n, n));
+        }
+
         void anchorPoint(Vector2 newAnchorPoint) {
             anchorPoint_ = newAnchorPoint;
         }
 
     private:
-        Vector2 pos_, size_, scale_, anchorPoint_ = Vector2(0.5, 0.5);
+        Vector2 pos_ = Vector2(0, 0);
+        Vector2 size_;
+        Vector2 scale_ = Vector2(1, 1);
+        Vector2 anchorPoint_ = Vector2(1, 1);
+
         char image[SPRITE_SIZE+1][SPRITE_SIZE+1];
 
-        void drawScaledPixel(int x, int y) {
-            x -= SPRITE_SIZE * scale().x() * anchorPoint_.x();
-            y -= SPRITE_SIZE * scale().y() * anchorPoint_.y();
+        void drawScaledPixel(Vector2 pos) {
+            pos -= SPRITE_SIZE * scale() * anchorPoint_;
 
             for(int i = 0; i < scale().x(); i++) {
                 for(int j = 0; j < scale().y(); j++) {
-                    LCD.DrawPixel(x + i, y + j);
+                    LCD.DrawPixel(pos.x() + i, pos.y() + j);
                 }
             }
         }
