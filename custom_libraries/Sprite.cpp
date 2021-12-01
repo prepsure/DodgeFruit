@@ -3,7 +3,15 @@
 
 #define SPRITE_INCLUDED
 
-#define SPRITE_SIZE 8
+#ifndef GAME_SCALE
+    #define GAME_SCALE 1
+#endif
+
+#define SCREEN_SIZE_X 320
+#define SCREEN_SIZE_Y 240
+
+#define SPRITE_SIZE_X SCREEN_SIZE_X / GAME_SCALE
+#define SPRITE_SIZE_Y SCREEN_SIZE_Y / GAME_SCALE
 
 #include <cstring>
 #include <fstream>
@@ -20,18 +28,9 @@ using namespace std;
 
 class Sprite {
     public:
-        Sprite(string spriteName) {
-            ifstream sprFile;
-            sprFile.open("sprites/" + spriteName + ".spr");
-
-            int lineCount = 0;
-            char line[SPRITE_SIZE];
-            while(sprFile >> line) {
-                strcpy(this->image[lineCount], line);
-                lineCount++;
-            }
-
-            sprFile.close();
+        Sprite(string spriteName, Vector2 spriteSize) {
+            size(spriteSize);
+            swapImage(spriteName);
         }
 
         void move(Vector2 pos) {
@@ -39,9 +38,23 @@ class Sprite {
             draw();
         }
 
+        void swapImage(string spriteName) {
+            ifstream sprFile;
+            sprFile.open("sprites/" + spriteName + ".spr");
+
+            int lineCount = 0;
+            char line[(int)size().x()];
+            while(sprFile >> line) {
+                strcpy_s(this->image[lineCount], line);
+                lineCount++;
+            }
+
+            sprFile.close();
+        }
+
         void draw() {
-            for(int i = 0; i < SPRITE_SIZE; i++) {
-                for(int j = 0; j < SPRITE_SIZE; j++) {
+            for(int i = 0; i < size_.x(); i++) {
+                for(int j = 0; j < size_.y(); j++) {
 
                     bool transparent = false;
                     int color = 0;
@@ -130,13 +143,13 @@ class Sprite {
     private:
         Vector2 pos_ = Vector2(0, 0);
         Vector2 size_;
-        Vector2 scale_ = Vector2(1, 1);
+        Vector2 scale_ = GAME_SCALE * Vector2(1, 1);
         Vector2 anchorPoint_ = Vector2(1, 1);
 
-        char image[SPRITE_SIZE+1][SPRITE_SIZE+1];
+        char image[SPRITE_SIZE_X+1][SPRITE_SIZE_Y+1];
 
         void drawScaledPixel(Vector2 pos) {
-            pos -= SPRITE_SIZE * scale() * anchorPoint_;
+            pos -= size() * scale() * anchorPoint_;
 
             for(int i = 0; i < scale().x(); i++) {
                 for(int j = 0; j < scale().y(); j++) {

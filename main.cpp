@@ -1,4 +1,4 @@
-#define SCREEN_SIZE Vector2(320, 240)
+#define GAME_SCALE 4
 
 #include "simulator_libraries/FEHLCD.h"
 
@@ -8,6 +8,7 @@
 
 // c++ libraries
 #include <fstream>
+#include <iostream>
 
 /*
  * Entry point to the application
@@ -18,8 +19,7 @@ int main() {
     LCD.Clear();
 
     // make character
-    Sprite character("smile");
-    character.scale(3);
+    Sprite character("character", Vector2(8, 8));
     character.anchorPoint(Vector2(0.5, 0.5));
 
     while (1) {
