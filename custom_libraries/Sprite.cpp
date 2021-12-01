@@ -6,9 +6,12 @@
 #ifndef GAME_SCALE
     #define GAME_SCALE 1
 #endif
-
-#define SCREEN_SIZE_X 320
-#define SCREEN_SIZE_Y 240
+#ifndef SCREEN_SIZE_X
+    #define SCREEN_SIZE_X 320
+#endif
+#ifndef SCREEN_SIZE_Y
+    #define SCREEN_SIZE_Y 240
+#endif
 
 #define SPRITE_SIZE_X SCREEN_SIZE_X / GAME_SCALE
 #define SPRITE_SIZE_Y SCREEN_SIZE_Y / GAME_SCALE

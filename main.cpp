@@ -1,4 +1,6 @@
 #define GAME_SCALE 4
+#define SCREEN_SIZE_X 320
+#define SCREEN_SIZE_Y 240
 
 #include "simulator_libraries/FEHLCD.h"
 
@@ -20,7 +22,24 @@ int main() {
 
     Sprite logo("menu/splash", Vector2(48, 24));
     logo.anchorPoint(Vector2(0.5, 0));
-    logo.move(Vector2(320/2, 32));
+    logo.move(Vector2(SCREEN_SIZE_X/2, 2*GAME_SCALE));
+
+    Sprite play("menu/play_button", Vector2(24, 7));
+    play.anchorPoint(Vector2(0.5, 0));
+    play.move(Vector2(SCREEN_SIZE_X/2, 27*GAME_SCALE));
+
+    Sprite stats("menu/stats_button", Vector2(24, 7));
+    stats.anchorPoint(Vector2(0.5, 0));
+    stats.move(Vector2(SCREEN_SIZE_X/2, 35*GAME_SCALE));
+
+    Sprite howto("menu/instruction_button", Vector2(24, 7));
+    howto.anchorPoint(Vector2(0.5, 0));
+    howto.move(Vector2(SCREEN_SIZE_X/2, 43*GAME_SCALE));
+
+    Sprite quit("menu/quit_button", Vector2(24, 7));
+    quit.anchorPoint(Vector2(0.5, 0));
+    quit.move(Vector2(SCREEN_SIZE_X/2, 51*GAME_SCALE));
+
 
     // make character
     Sprite character("character", Vector2(8, 8));
