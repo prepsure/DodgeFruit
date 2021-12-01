@@ -144,7 +144,7 @@ class Sprite {
         Vector2 pos_ = Vector2(0, 0);
         Vector2 size_;
         Vector2 scale_ = GAME_SCALE * Vector2(1, 1);
-        Vector2 anchorPoint_ = Vector2(1, 1);
+        Vector2 anchorPoint_ = Vector2(0, 0);
 
         char image[SPRITE_SIZE_X+1][SPRITE_SIZE_Y+1];
 

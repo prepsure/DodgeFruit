@@ -18,11 +18,23 @@ int main() {
     LCD.SetBackgroundColor(BLACK);
     LCD.Clear();
 
+    Sprite logo("menu/splash", Vector2(48, 24));
+    logo.anchorPoint(Vector2(0.5, 0));
+    logo.move(Vector2(320/2, 32));
+
     // make character
     Sprite character("character", Vector2(8, 8));
     character.anchorPoint(Vector2(0.5, 0.5));
 
+    while(1) {
+        LCD.Update();
+    }
+
+    /*
     while (1) {
+        LCD.Clear();
+
+        logo.move(Vector2(0, 0));
 
         // START GAMEPLAY LOOP
 
@@ -40,8 +52,8 @@ int main() {
         }
 
         //cout << "not touching" << endl;
-        LCD.Clear();
         LCD.Update();
     }
+    */
     return 0;
 }
