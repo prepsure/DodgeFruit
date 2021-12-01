@@ -3,8 +3,8 @@
 #include "simulator_libraries/FEHLCD.h"
 
 // paige libraries :)
-#include "modules/Vector.cpp"
-#include "modules/Sprite.cpp"
+#include "custom_libraries/Vector.cpp"
+#include "custom_libraries/Sprite.cpp"
 
 // c++ libraries
 #include <fstream>
@@ -18,25 +18,29 @@ int main() {
     LCD.Clear();
 
     // make character
-    Sprite smile("smile", Vector2(100, 100), Vector2(3,3));
+    Sprite character("smile", Vector2(100, 100), Vector2(3,3));
+    character.anchorPoint(Vector2(0.5, 0.5));
 
     while (1) {
-        // make the screen blank
-        LCD.Clear();
-        LCD.SetBackgroundColor(BLACK);
+
+        // START GAMEPLAY LOOP
 
         // get touch pos
         int xpos, ypos;
-        bool isTouched = LCD.Touch(&xpos, &ypos);
-        // move smile to touch pos
-        if(isTouched){
-            smile.move(Vector2(xpos, ypos));
+        // continue as long as the user is touching the screen
+        while (LCD.Touch(&xpos, &ypos)) {
+            // make the screen blank
+            LCD.Clear();
+            LCD.SetBackgroundColor(BLACK);
+
+            character.move(Vector2(xpos, ypos));
+
+            LCD.Update();
         }
 
-
-
+        cout << "not touching" << endl;
+        LCD.Clear();
         LCD.Update();
-        // Never end
     }
     return 0;
 }
