@@ -1,7 +1,8 @@
 #define GAME_SCALE 4
-#define SCREEN_SIZE_X 320
-#define SCREEN_SIZE_Y 240
+#define SCREEN_SIZE_X 320.0
+#define SCREEN_SIZE_Y 240.0
 
+// sim libraries
 #include "simulator_libraries/FEHLCD.h"
 
 // paige libraries :)

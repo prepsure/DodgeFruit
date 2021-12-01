@@ -7,14 +7,14 @@
     #define GAME_SCALE 1
 #endif
 #ifndef SCREEN_SIZE_X
-    #define SCREEN_SIZE_X 320
+    #define SCREEN_SIZE_X 320.0
 #endif
 #ifndef SCREEN_SIZE_Y
-    #define SCREEN_SIZE_Y 240
+    #define SCREEN_SIZE_Y 240.0
 #endif
 
-#define SPRITE_SIZE_X SCREEN_SIZE_X / GAME_SCALE
-#define SPRITE_SIZE_Y SCREEN_SIZE_Y / GAME_SCALE
+#define SPRITE_SIZE_X (int) SCREEN_SIZE_X / GAME_SCALE
+#define SPRITE_SIZE_Y (int) SCREEN_SIZE_Y / GAME_SCALE
 
 #include <cstring>
 #include <fstream>
