@@ -22,7 +22,7 @@ class Sprite {
     public:
         Sprite(string spriteName) {
             ifstream sprFile;
-            sprFile.open("sprites/" + spriteName + ".dat");
+            sprFile.open("sprites/" + spriteName + ".spr");
 
             int lineCount = 0;
             char line[SPRITE_SIZE];
