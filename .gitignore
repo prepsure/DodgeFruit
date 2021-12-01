@@ -1,3 +1,4 @@
 /simulator_libraries
 *.exe
 *.o
+*.d
