@@ -4,6 +4,7 @@
 
 // sim libraries
 #include "simulator_libraries/FEHLCD.h"
+#include "simulator_libraries/FEHUtility.h"
 
 // paige libraries :)
 #include "custom_libraries/Vector.cpp"
@@ -65,17 +66,17 @@ int main() {
 
         int xpos, ypos;
         bool touching = LCD.Touch(&xpos, &ypos);
-        Vector2 screenPoint(xpos, ypos);//
+        Vector2 screenPoint(xpos, ypos);
 
         if (touching) {
             if (play.isPointWithin(screenPoint)) {
-                cout << "play" << endl;
+                doGameplayLoop();
             } else if (stats.isPointWithin(screenPoint)) {
-                cout << "stats" << endl;
+                showStatsScreen();
             } else if (howto.isPointWithin(screenPoint)) {
-                cout << "howto" << endl;
+                showHowToScreen();
             } else if (credits.isPointWithin(screenPoint)) {
-                cout << "credits" << endl;
+                showCredits();
             }
         }
 
@@ -83,6 +84,7 @@ int main() {
 
         // get touch pos
 
+        /*
         // continue as long as the user is touching the screen
         while (LCD.Touch(&xpos, &ypos)) {
             // make the screen blank
@@ -93,10 +95,28 @@ int main() {
 
             LCD.Update();
         }
+        */
 
         //cout << "not touching" << endl;
         LCD.Update();
     }
 
     return 0;
+}
+
+
+void doGameplayLoop() {
+    Sleep(5.0);
+}
+
+void showStatsScreen() {
+    Sleep(5.0);
+}
+
+void showHowToScreen() {
+    Sleep(5.0);
+}
+
+void showCredits() {
+    Sleep(5.0);
 }
