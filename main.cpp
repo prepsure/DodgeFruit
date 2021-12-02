@@ -32,19 +32,19 @@ int main() {
     logo.anchorPoint(Vector2(0.5, 0));
     logo.move(Vector2(SCREEN_SIZE_X/2, 2*GAME_SCALE) + menuOffset);
 
-    Sprite play("menu/play_button", Vector2(24, 7));
+    Sprite play("menu/play_button", Vector2(48, 7));
     play.anchorPoint(Vector2(0.5, 0));
     play.move(Vector2(SCREEN_SIZE_X/2, 27*GAME_SCALE) + menuOffset);
 
-    Sprite stats("menu/stats_button", Vector2(24, 7));
+    Sprite stats("menu/stats_button", Vector2(48, 7));
     stats.anchorPoint(Vector2(0.5, 0));
     stats.move(Vector2(SCREEN_SIZE_X/2, 35*GAME_SCALE) + menuOffset);
 
-    Sprite howto("menu/instruction_button", Vector2(24, 7));
+    Sprite howto("menu/instruction_button", Vector2(48, 7));
     howto.anchorPoint(Vector2(0.5, 0));
     howto.move(Vector2(SCREEN_SIZE_X/2, 43*GAME_SCALE) + menuOffset);
 
-    Sprite credits("menu/quit_button", Vector2(24, 7));
+    Sprite credits("menu/quit_button", Vector2(48, 7));
     credits.anchorPoint(Vector2(0.5, 0));
     credits.move(Vector2(SCREEN_SIZE_X/2, 51*GAME_SCALE) + menuOffset);
 
@@ -107,7 +107,7 @@ int main() {
 
 void doGameplayLoop() {
     LCD.Clear();
-    Sprite gameBack("menu/game_background", Vector2(16, 60));
+    Sprite gameBack("menu/game_background", Vector2(60, 16));
     gameBack.draw();
 
     LCD.Update();
@@ -116,28 +116,70 @@ void doGameplayLoop() {
 
 void showStatsScreen() {
     LCD.Clear();
-    Sprite statsBack("menu/stats_background", Vector2(16, 60));
+
+    Sprite statsBack("menu/stats_background", Vector2(60, 16));
     statsBack.draw();
 
+    Sprite backButton("menu/backButton", Vector2(16, 6));
+    backButton.pos(Vector2(0, 200));
+    backButton.draw();
+
     LCD.Update();
-    Sleep(5.0);
+    while(1) {
+        int xpos, ypos;
+        bool touching = LCD.Touch(&xpos, &ypos);
+        Vector2 screenPoint(xpos, ypos);
+
+        if(touching && backButton.isPointWithin(screenPoint)){
+            break;
+        }
+
+    }
 }
 
 void showHowToScreen() {
     LCD.Clear();
 
-    Sprite howToBack("menu/instructions_background", Vector2(16, 60));
+    Sprite howToBack("menu/instructions_background", Vector2(60, 16));
     howToBack.draw();
 
+    Sprite backButton("menu/backButton", Vector2(16, 6));
+    backButton.pos(Vector2(0, 200));
+    backButton.draw();
+
     LCD.Update();
-    Sleep(5.0);
+    while(1) {
+        int xpos, ypos;
+        bool touching = LCD.Touch(&xpos, &ypos);
+        Vector2 screenPoint(xpos, ypos);
+
+        if(touching && backButton.isPointWithin(screenPoint)){
+            break;
+        }
+
+    }
 }
 
 void showCredits() {
     LCD.Clear();
-    Sprite creditsBack("menu/credit_background", Vector2(16, 60));
+
+    Sprite creditsBack("menu/credit_background", Vector2(60, 16));
     creditsBack.draw();
 
+    Sprite backButton("menu/backButton", Vector2(16, 6));
+    backButton.pos(Vector2(0, 200));
+    backButton.draw();
+
     LCD.Update();
-    Sleep(5.0);
+    while(1) {
+        int xpos, ypos;
+        bool touching = LCD.Touch(&xpos, &ypos);
+        Vector2 screenPoint(xpos, ypos);
+
+        if(touching && backButton.isPointWithin(screenPoint)){
+            break;
+        }
+
+    }
+
 }
