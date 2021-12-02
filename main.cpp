@@ -43,9 +43,9 @@ int main() {
     howto.anchorPoint(Vector2(0.5, 0));
     howto.move(Vector2(SCREEN_SIZE_X/2, 43*GAME_SCALE) + menuOffset);
 
-    Sprite quit("menu/quit_button", Vector2(24, 7));
-    quit.anchorPoint(Vector2(0.5, 0));
-    quit.move(Vector2(SCREEN_SIZE_X/2, 51*GAME_SCALE) + menuOffset);
+    Sprite credits("menu/quit_button", Vector2(24, 7));
+    credits.anchorPoint(Vector2(0.5, 0));
+    credits.move(Vector2(SCREEN_SIZE_X/2, 51*GAME_SCALE) + menuOffset);
 
 
     // make character
@@ -61,7 +61,7 @@ int main() {
         play.draw();
         stats.draw();
         howto.draw();
-        quit.draw();
+        credits.draw();
 
         int xpos, ypos;
         bool touching = LCD.Touch(&xpos, &ypos);
@@ -74,8 +74,8 @@ int main() {
                 cout << "stats" << endl;
             } else if (howto.isPointWithin(screenPoint)) {
                 cout << "howto" << endl;
-            } else if (quit.isPointWithin(screenPoint)) {
-                cout << "quit" << endl;
+            } else if (credits.isPointWithin(screenPoint)) {
+                cout << "credits" << endl;
             }
         }
 
