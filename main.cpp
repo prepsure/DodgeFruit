@@ -106,10 +106,20 @@ int main() {
 
 
 void doGameplayLoop() {
+    LCD.Clear();
+    Sprite gameBack("menu/game_background", Vector2(16, 60));
+    gameBack.draw();
+
+    LCD.Update();
     Sleep(5.0);
 }
 
 void showStatsScreen() {
+    LCD.Clear();
+    Sprite statsBack("menu/stats_background", Vector2(16, 60));
+    statsBack.draw();
+
+    LCD.Update();
     Sleep(5.0);
 }
 
@@ -118,5 +128,10 @@ void showHowToScreen() {
 }
 
 void showCredits() {
+    LCD.Clear();
+    Sprite creditsBack("menu/credit_background", Vector2(16, 60));
+    creditsBack.draw();
+
+    LCD.Update();
     Sleep(5.0);
 }
