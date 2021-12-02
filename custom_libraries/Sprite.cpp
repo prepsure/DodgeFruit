@@ -103,6 +103,19 @@ class Sprite {
             }
         }
 
+        bool isPointWithin(Vector2 screenPoint) {
+            float leftBound = pos().x() - size().x() * scale().x() * anchorPoint().x();
+            float topBound = pos().y() - size().y() * scale().y() * anchorPoint().y();
+            float rightBound = leftBound + size().x() * scale().x();
+            float bottomBound = topBound + size().y() * scale().y();
+
+            return
+                leftBound <= screenPoint.x() &&
+                rightBound >= screenPoint.x() &&
+                topBound <= screenPoint.y() &&
+                bottomBound >= screenPoint.y();
+        }
+
 
         // getters for internal fields
         Vector2 pos() {
@@ -152,7 +165,7 @@ class Sprite {
         char image[SPRITE_SIZE_X+1][SPRITE_SIZE_Y+1];
 
         void drawScaledPixel(Vector2 pos) {
-            pos -= size() * scale() * anchorPoint_;
+            pos -= size() * scale() * anchorPoint();
 
             for(int i = 0; i < scale().x(); i++) {
                 for(int j = 0; j < scale().y(); j++) {

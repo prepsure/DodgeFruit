@@ -16,6 +16,7 @@
 void doGameplayLoop();
 void showStatsScreen();
 void showHowToScreen();
+void showCredits();
 void quitGame();
 
 /*
@@ -62,10 +63,26 @@ int main() {
         howto.draw();
         quit.draw();
 
+        int xpos, ypos;
+        bool touching = LCD.Touch(&xpos, &ypos);
+        Vector2 screenPoint(xpos, ypos);//
+
+        if (touching) {
+            if (play.isPointWithin(screenPoint)) {
+                cout << "play" << endl;
+            } else if (stats.isPointWithin(screenPoint)) {
+                cout << "stats" << endl;
+            } else if (howto.isPointWithin(screenPoint)) {
+                cout << "howto" << endl;
+            } else if (quit.isPointWithin(screenPoint)) {
+                cout << "quit" << endl;
+            }
+        }
+
         // START GAMEPLAY LOOP
 
         // get touch pos
-        int xpos, ypos;
+
         // continue as long as the user is touching the screen
         while (LCD.Touch(&xpos, &ypos)) {
             // make the screen blank
