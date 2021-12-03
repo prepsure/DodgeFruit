@@ -109,10 +109,11 @@ int main() {
 
 void doGameplayLoop() {
     LCD.Clear();
+
     Sprite gameBack("menu/play_background", Vector2(100, 80));
     gameBack.draw();
-
     LCD.Update();
+
     Sleep(5.0);
 }
 
