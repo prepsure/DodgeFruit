@@ -33,7 +33,7 @@ class Sprite {
     public:
         Sprite(string spriteName, Vector2 spriteSize) {
             size(spriteSize);
-            swapImage(spriteName);
+            swapImage(spriteName, spriteSize);
         }
 
         void move(Vector2 pos) {
@@ -41,15 +41,18 @@ class Sprite {
             draw();
         }
 
-        void swapImage(string spriteName) {
+        void swapImage(string spriteName, Vector2 spriteSize) {
             ifstream sprFile;
             sprFile.open("sprites/" + spriteName + ".spr");
 
-            int lineCount = 0;
-            char line[(int)size().x()];
-            while(sprFile >> line) {
-                strcpy_s(this->image[lineCount], line);
-                lineCount++;
+            int pixelCount = 0;
+            int next;
+
+            while(sprFile >> next){
+                int x = pixelCount / (int)spriteSize.x();
+                int y = pixelCount % (int)spriteSize.x();
+                image[x][y] = next;
+                pixelCount++;
             }
 
             sprFile.close();
@@ -58,40 +61,8 @@ class Sprite {
         void draw() {
             for(int i = 0; i < size_.x(); i++) {
                 for(int j = 0; j < size_.y(); j++) {
-
-                    bool transparent = false;
-                    int color = 0;
-
-                    // get color based on the character in the array
-                    switch (image[j][i]) {
-                        case 'B':
-                            color = BLACK;
-                            break;
-                        case 'W':
-                            color = WHITE;
-                            break;
-                        case 'R':
-                            color = RED;
-                            break;
-                        case 'U':
-                            color = BLUE;
-                            break;
-                        case 'S':
-                            color = SCARLET;
-                            break;
-                        case 'A':
-                            color = GRAY;
-                            break;
-                        case 'G':
-                            color = GREEN;
-                            break;
-                        case 'Y':
-                            color = YELLOW;
-                            break;
-                        default:
-                            transparent = true;
-                            break;
-                    }
+                    int color = image[j][i];
+                    bool transparent = (color == -1);
 
                     // draw pixel on the screen
                     if (!transparent) {
@@ -162,7 +133,7 @@ class Sprite {
         Vector2 scale_ = GAME_SCALE * Vector2(1, 1);
         Vector2 anchorPoint_ = Vector2(0, 0);
 
-        char image[SPRITE_SIZE_X+1][SPRITE_SIZE_Y+1];
+        int image[SPRITE_SIZE_X +1][SPRITE_SIZE_Y +1];
 
         void drawScaledPixel(Vector2 pos) {
             pos -= size() * scale() * anchorPoint();
