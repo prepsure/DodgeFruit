@@ -1,4 +1,4 @@
-#define GAME_SCALE 1
+#define GAME_SCALE 3
 #define SCREEN_SIZE_X 320.0
 #define SCREEN_SIZE_Y 240.0
 
@@ -54,7 +54,7 @@ int main() {
     */
 
     while (1) {
-        LCD.SetBackgroundColor(BLACK);
+        LCD.SetBackgroundColor(4200974);
         LCD.Clear();
 
         // draw menu
@@ -64,7 +64,6 @@ int main() {
         howto.draw();
         credits.draw();
 
-        /*
         int xpos, ypos;
         bool touching = LCD.Touch(&xpos, &ypos);
         Vector2 screenPoint(xpos, ypos);
@@ -81,11 +80,11 @@ int main() {
             }
         }
 
+        /*
         // START GAMEPLAY LOOP
 
         // get touch pos
 
-        /*
         // continue as long as the user is touching the screen
         while (LCD.Touch(&xpos, &ypos)) {
             // make the screen blank
@@ -98,7 +97,6 @@ int main() {
         }
         */
 
-        //cout << "not touching" << endl;
         LCD.Update();
     }
 
@@ -109,7 +107,7 @@ int main() {
 
 void doGameplayLoop() {
     LCD.Clear();
-    Sprite gameBack("menu/game_background", Vector2(60, 16));
+    Sprite gameBack("menu/play_background", Vector2(100, 80));
     gameBack.draw();
 
     LCD.Update();
@@ -119,7 +117,7 @@ void doGameplayLoop() {
 void showStatsScreen() {
     LCD.Clear();
 
-    Sprite statsBack("menu/stats_background", Vector2(60, 16));
+    Sprite statsBack("menu/stats_background", Vector2(100, 80));
     statsBack.draw();
 
     Sprite backButton("menu/backButton", Vector2(16, 6));
@@ -142,7 +140,7 @@ void showStatsScreen() {
 void showHowToScreen() {
     LCD.Clear();
 
-    Sprite howToBack("menu/instructions_background", Vector2(60, 16));
+    Sprite howToBack("menu/instruction_background", Vector2(100, 80));
     howToBack.draw();
 
     Sprite backButton("menu/backButton", Vector2(16, 6));
@@ -165,7 +163,7 @@ void showHowToScreen() {
 void showCredits() {
     LCD.Clear();
 
-    Sprite creditsBack("menu/credit_background", Vector2(60, 16));
+    Sprite creditsBack("menu/credits_background", Vector2(100, 80));
     creditsBack.draw();
 
     Sprite backButton("menu/backButton", Vector2(16, 6));

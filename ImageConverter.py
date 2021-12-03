@@ -1,8 +1,8 @@
 from PIL import Image
 
 
-raw = 'raw_images/placeholderbutton.png'
-out = 'sprites/menu/stats_button.spr'
+raw = 'raw_images/creditsbackground.png'
+out = 'sprites/menu/credits_background.spr'
 
 
 # read from the raw image
