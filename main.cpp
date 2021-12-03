@@ -20,6 +20,8 @@ void showHowToScreen();
 void showCredits();
 void quitGame();
 
+void waitForBackButtonPress();
+
 /*
  * Entry point to the application
  */
@@ -119,22 +121,9 @@ void showStatsScreen() {
 
     Sprite statsBack("menu/stats_background", Vector2(100, 80));
     statsBack.draw();
-
-    Sprite backButton("menu/backButton", Vector2(16, 6));
-    backButton.pos(Vector2(0, 200));
-    backButton.draw();
-
     LCD.Update();
-    while(1) {
-        int xpos, ypos;
-        bool touching = LCD.Touch(&xpos, &ypos);
-        Vector2 screenPoint(xpos, ypos);
 
-        if(touching && backButton.isPointWithin(screenPoint)){
-            break;
-        }
-
-    }
+    waitForBackButtonPress();
 }
 
 void showHowToScreen() {
@@ -142,22 +131,9 @@ void showHowToScreen() {
 
     Sprite howToBack("menu/instruction_background", Vector2(100, 80));
     howToBack.draw();
-
-    Sprite backButton("menu/backButton", Vector2(16, 6));
-    backButton.pos(Vector2(0, 200));
-    backButton.draw();
-
     LCD.Update();
-    while(1) {
-        int xpos, ypos;
-        bool touching = LCD.Touch(&xpos, &ypos);
-        Vector2 screenPoint(xpos, ypos);
 
-        if(touching && backButton.isPointWithin(screenPoint)){
-            break;
-        }
-
-    }
+    waitForBackButtonPress();
 }
 
 void showCredits() {
@@ -165,21 +141,23 @@ void showCredits() {
 
     Sprite creditsBack("menu/credits_background", Vector2(100, 80));
     creditsBack.draw();
+    LCD.Update();
 
+    waitForBackButtonPress();
+}
+
+void waitForBackButtonPress() {
     Sprite backButton("menu/backButton", Vector2(16, 6));
     backButton.pos(Vector2(0, 200));
     backButton.draw();
 
     LCD.Update();
-    while(1) {
-        int xpos, ypos;
-        bool touching = LCD.Touch(&xpos, &ypos);
+
+    bool touching = false;
+    int xpos=0, ypos=0;
+
+    while(!(touching && backButton.isPointWithin(Vector2(xpos, ypos)))) {
+        touching = LCD.Touch(&xpos, &ypos);
         Vector2 screenPoint(xpos, ypos);
-
-        if(touching && backButton.isPointWithin(screenPoint)){
-            break;
-        }
-
     }
-
 }
