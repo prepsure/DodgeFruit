@@ -3,7 +3,7 @@
 #define SCREEN_SIZE_Y 240.0
 
 // gameplay params
-#define GAME_SCALE 2
+#define GAME_SCALE 4
 #define TIME_BETWEEN_FRUITS 2.0
 
 
@@ -35,7 +35,7 @@ void waitForBackButtonPress();
  */
 int main() {
     // Clear background
-    Vector2 menuOffset(0, 24);
+    Vector2 menuOffset(0, 0);
 
     Sprite logo("menu/splash", Vector2(48, 24));
     logo.anchorPoint(Vector2(0.5, 0));
@@ -57,6 +57,7 @@ int main() {
     credits.anchorPoint(Vector2(0.5, 0));
     credits.move(Vector2(SCREEN_SIZE_X/2, 51*GAME_SCALE) + menuOffset);
 
+    // start the menu
     while (true) {
         LCD.SetBackgroundColor(4200974);
         LCD.Clear();
@@ -68,11 +69,11 @@ int main() {
         howto.draw();
         credits.draw();
 
+        // check for button presses
         int xpos, ypos;
-        bool touching = LCD.Touch(&xpos, &ypos);
-        Vector2 screenPoint(xpos, ypos);
+        if (LCD.Touch(&xpos, &ypos)) {
+            Vector2 screenPoint(xpos, ypos);
 
-        if (touching) {
             if (play.isPointWithin(screenPoint)) {
                 doGameplayLoop();
             } else if (stats.isPointWithin(screenPoint)) {
@@ -84,26 +85,9 @@ int main() {
             }
         }
 
-        /*
-        // START GAMEPLAY LOOP
-
-        // get touch pos
-
-        // continue as long as the user is touching the screen
-        while (LCD.Touch(&xpos, &ypos)) {
-            // make the screen blank
-            LCD.Clear();
-            LCD.SetBackgroundColor(BLACK);
-
-            character.move(Vector2(xpos, ypos));
-
-            LCD.Update();
-        }
-        */
-
+        // update screen
         LCD.Update();
     }
-
 
     return 0;
 }
@@ -148,7 +132,7 @@ void doGameplayLoop() {
 void showStatsScreen() {
     LCD.Clear();
 
-    Sprite statsBack("menu/stats_background", Vector2(100, 80));
+    Sprite statsBack("menu/stats_background", Vector2(80, 60));
     statsBack.draw();
     LCD.Update();
 
@@ -158,7 +142,7 @@ void showStatsScreen() {
 void showHowToScreen() {
     LCD.Clear();
 
-    Sprite howToBack("menu/instruction_background", Vector2(100, 80));
+    Sprite howToBack("menu/instruction_background", Vector2(80, 60));
     howToBack.draw();
     LCD.Update();
 
@@ -168,7 +152,7 @@ void showHowToScreen() {
 void showCredits() {
     LCD.Clear();
 
-    Sprite creditsBack("menu/credits_background", Vector2(100, 80));
+    Sprite creditsBack("menu/credits_background", Vector2(80, 60));
     creditsBack.draw();
     LCD.Update();
 
@@ -176,8 +160,9 @@ void showCredits() {
 }
 
 void waitForBackButtonPress() {
-    Sprite backButton("menu/backButton", Vector2(16, 6));
-    backButton.pos(Vector2(0, 200));
+    Sprite backButton("menu/back_button", Vector2(16, 8));
+    backButton.anchorPoint(Vector2(0, 1));
+    backButton.pos(Vector2(8, SCREEN_SIZE_Y - 8));//
     backButton.draw();
 
     LCD.Update();
