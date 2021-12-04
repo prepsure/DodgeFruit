@@ -1,6 +1,11 @@
-#define GAME_SCALE 3
+// game constants
 #define SCREEN_SIZE_X 320.0
 #define SCREEN_SIZE_Y 240.0
+
+// gameplay params
+#define GAME_SCALE 2
+#define TIME_BETWEEN_FRUITS 2.0
+
 
 // sim libraries
 #include "simulator_libraries/FEHLCD.h"
@@ -14,7 +19,10 @@
 #include <fstream>
 #include <iostream>
 
+
 void doGameplayLoop();
+void showGameOverScreen();
+
 void showStatsScreen();
 void showHowToScreen();
 void showCredits();
@@ -49,13 +57,7 @@ int main() {
     credits.anchorPoint(Vector2(0.5, 0));
     credits.move(Vector2(SCREEN_SIZE_X/2, 51*GAME_SCALE) + menuOffset);
 
-    /*
-    / make character
-    Sprite character("character", Vector2(8, 8));
-    character.anchorPoint(Vector2(0.5, 0.5));
-    */
-
-    while (1) {
+    while (true) {
         LCD.SetBackgroundColor(4200974);
         LCD.Clear();
 
@@ -107,15 +109,41 @@ int main() {
 }
 
 
+/*
+ * gameplay!!
+ */
 void doGameplayLoop() {
-    LCD.Clear();
+    // make character
+    Sprite character("pointer", Vector2(8, 8));
+    character.anchorPoint(Vector2(0.5, 0.5));
 
-    Sprite gameBack("menu/play_background", Vector2(100, 80));
-    gameBack.draw();
-    LCD.Update();
+    // game should keep playing as long as the screen is being touched
+    int xpos, ypos;
+    while (LCD.Touch(&xpos, &ypos)) {
+        // clear
+        LCD.Clear();
 
-    Sleep(5.0);
+        // draw background
+        LCD.SetBackgroundColor(WHITE);
+
+        // draw character
+        character.move(Vector2(xpos, ypos));
+
+        // draw fruits
+
+
+        // test if the player touched a fruit
+
+        // update screen
+        LCD.Update();
+    }
 }
+
+
+
+/*
+ * menu screens!!
+ */
 
 void showStatsScreen() {
     LCD.Clear();
