@@ -49,11 +49,11 @@ int main() {
     stats.anchorPoint(Vector2(0.5, 0));
     stats.move(Vector2(SCREEN_SIZE_X/2, 35*GAME_SCALE) + menuOffset);
 
-    Sprite howto("menu/instruction_button", Vector2(24, 7));
+    Sprite howto("menu/howtobutton", Vector2(24, 7));
     howto.anchorPoint(Vector2(0.5, 0));
     howto.move(Vector2(SCREEN_SIZE_X/2, 43*GAME_SCALE) + menuOffset);
 
-    Sprite credits("menu/credits_button", Vector2(24, 7));
+    Sprite credits("menu/creditsbutton", Vector2(24, 7));
     credits.anchorPoint(Vector2(0.5, 0));
     credits.move(Vector2(SCREEN_SIZE_X/2, 51*GAME_SCALE) + menuOffset);
 
@@ -133,6 +133,9 @@ void showStatsScreen() {
     LCD.Clear();
 
     Sprite statsBack("menu/stats_background", Vector2(80, 60));
+    statsBack.anchorPoint(Vector2(0.5, 0.5));
+    statsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+
     statsBack.draw();
     LCD.Update();
 
@@ -142,7 +145,10 @@ void showStatsScreen() {
 void showHowToScreen() {
     LCD.Clear();
 
-    Sprite howToBack("menu/instructions1", Vector2(80, 60));
+    Sprite howToBack("menu/instruction_background", Vector2(80, 60));
+    howToBack.anchorPoint(Vector2(0.5, 0.5));
+    howToBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+
     howToBack.draw();
     LCD.Update();
 
@@ -153,6 +159,9 @@ void showCredits() {
     LCD.Clear();
 
     Sprite creditsBack("menu/credits_background", Vector2(80, 60));
+    creditsBack.anchorPoint(Vector2(0.5, 0.5));
+    creditsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+
     creditsBack.draw();
     LCD.Update();
 
