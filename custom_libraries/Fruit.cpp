@@ -31,17 +31,11 @@ using namespace std;
 #define APPLE "apple"
 Vector2 applepos(float t, Vector2 offset);
 
-// #define BANANA "banana"
-// Vector2 bananaPos(float t);
+#define TANGARINE "tangerine"
+Vector2 tangerinePos(float t, Vector2 offset);
 
-// #define TANGARINE "tangerine"
-// Vector2 tangerinePos(float t);
-
-// #define STRAWBERRY "strawberry"
-// Vector2 strawberryPos(float t);
-
-// #define KIWI "kiwi"
-// Vector2 kiwiPos(float t);
+#define STRAWBERRY "strawberry"
+Vector2 strawberryPos(float t, Vector2 offset);
 
 #define WATERMELON "watermelon"
 Vector2 watermelonpos(float t, Vector2 offset);
@@ -57,7 +51,6 @@ class Fruit {
         sprite_("fruits/" + type, FRUIT_SIZE), offset_(offset.x(), offset.y()) {
             type_ = type;
             speed_ = speed;
-            cout << "reconstructing" << endl;
         }
 
         void stepPath(float dt) {
@@ -77,18 +70,27 @@ class Fruit {
         Vector2 offset_;
 };
 
-
-Vector2 lemonpos(float t, Vector2 offset) {
-    //makes a circle
-    return Vector2(SCREEN_SIZE_Y/2 * cos(t) + offset.x(), SCREEN_SIZE_Y/2 * sin(t) + offset.y());
+// star
+Vector2 applepos(float t, Vector2 offset) {
+    return Vector2(SCREEN_SIZE_Y/2 * pow(cos(t),5) + offset.x(), SCREEN_SIZE_Y/2 * pow(sin(t),5) + offset.y());
 }
 
+// diamond
+Vector2 tangerinePos(float t, Vector2 offset) {
+    return Vector2();
+}
+
+// sin wave
+Vector2 strawberryPos(float t, Vector2 offset) {
+    return Vector2();
+}
+
+// infinity
 Vector2 watermelonpos(float t, Vector2 offset) {
-    //makes an infinity
     return Vector2(SCREEN_SIZE_Y/2 * cos(t) + offset.x(), SCREEN_SIZE_Y/2*((sin(2*t))/2) + offset.y());
 }
 
-Vector2 applepos(float t, Vector2 offset) {
-    //makes a star
-    //return Vector2(SCREEN_SIZE_Y/2 * pow(cos(t),5) + offset.x(), SCREEN_SIZE_Y/2 * pow(sin(t),5) + offset.y());
+// circle
+Vector2 lemonpos(float t, Vector2 offset) {
+    return Vector2(SCREEN_SIZE_Y/2 * cos(t) + offset.x(), SCREEN_SIZE_Y/2 * sin(t) + offset.y());
 }
