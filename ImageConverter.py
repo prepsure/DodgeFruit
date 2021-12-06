@@ -3,8 +3,8 @@ from PIL import Image
 
 
 
-raw = 'raw_images/fruits/apple.png'
-out = 'sprites/fruits/apple.spr'
+raw = 'raw_images/fruits/tangerine.png'
+out = 'sprites/fruits/tangerine.spr'
 
 
 # read from the raw image
