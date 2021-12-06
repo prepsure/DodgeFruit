@@ -3,9 +3,9 @@ from PIL import Image
 
 
 
-raw = 'raw_images/menu/instructions1.png'
+raw = 'raw_images/fruits/orange.png'
 
-out = 'sprites/menu/instructions1.spr'
+out = 'sprites/fruits/orange.spr'
 
 
 # read from the raw image

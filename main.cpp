@@ -142,7 +142,7 @@ void showStatsScreen() {
 void showHowToScreen() {
     LCD.Clear();
 
-    Sprite howToBack("menu/instruction_background", Vector2(80, 60));
+    Sprite howToBack("menu/instructions1", Vector2(80, 60));
     howToBack.draw();
     LCD.Update();
 
