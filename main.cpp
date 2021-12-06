@@ -4,12 +4,14 @@
 
 // gameplay params
 #define GAME_SCALE 3
+#define MENU_SCALE 4
 #define TIME_BETWEEN_FRUITS 2.0
 
 
 // sim libraries
 #include "simulator_libraries/FEHLCD.h"
 #include "simulator_libraries/FEHUtility.h"
+#include "simulator_libraries/FEHRandom.h"
 
 // paige libraries :)
 #include "custom_libraries/Vector.cpp"
@@ -40,24 +42,29 @@ int main() {
     Vector2 menuOffset(0, 0);
 
     Sprite logo("menu/splash", Vector2(48, 24));
+    logo.scale(MENU_SCALE);
     logo.anchorPoint(Vector2(0.5, 0));
-    logo.move(Vector2(SCREEN_SIZE_X/2, 2*GAME_SCALE) + menuOffset);
+    logo.move(Vector2(SCREEN_SIZE_X/2, 2*MENU_SCALE) + menuOffset);
 
     Sprite play("menu/play_button", Vector2(24, 7));
+    play.scale(MENU_SCALE);
     play.anchorPoint(Vector2(0.5, 0));
-    play.move(Vector2(SCREEN_SIZE_X/2, 27*GAME_SCALE) + menuOffset);
+    play.move(Vector2(SCREEN_SIZE_X/2, 27*MENU_SCALE) + menuOffset);
 
     Sprite stats("menu/stats_button", Vector2(24, 7));
+    stats.scale(MENU_SCALE);
     stats.anchorPoint(Vector2(0.5, 0));
-    stats.move(Vector2(SCREEN_SIZE_X/2, 35*GAME_SCALE) + menuOffset);
+    stats.move(Vector2(SCREEN_SIZE_X/2, 35*MENU_SCALE) + menuOffset);
 
     Sprite howto("menu/howtobutton", Vector2(24, 7));
+    howto.scale(MENU_SCALE);
     howto.anchorPoint(Vector2(0.5, 0));
-    howto.move(Vector2(SCREEN_SIZE_X/2, 43*GAME_SCALE) + menuOffset);
+    howto.move(Vector2(SCREEN_SIZE_X/2, 43*MENU_SCALE) + menuOffset);
 
     Sprite credits("menu/creditsbutton", Vector2(24, 7));
+    credits.scale(MENU_SCALE);
     credits.anchorPoint(Vector2(0.5, 0));
-    credits.move(Vector2(SCREEN_SIZE_X/2, 51*GAME_SCALE) + menuOffset);
+    credits.move(Vector2(SCREEN_SIZE_X/2, 51*MENU_SCALE) + menuOffset);
 
     // start the menu
     while (true) {
@@ -104,8 +111,7 @@ void doGameplayLoop() {
     character.anchorPoint(Vector2(0.5, 0.5));
     character.scale(2);
 
-
-    vector<Fruit> projectiles;
+    vector<Fruit*> projectiles;
 
     float lastTime = TimeNow();
     float lastFruitSpawnTime = TimeNow();
@@ -113,6 +119,8 @@ void doGameplayLoop() {
     // game should keep playing as long as the screen is being touched
     int xpos, ypos;
     while (LCD.Touch(&xpos, &ypos)) {
+        Vector2 mousePos = Vector2(xpos, ypos);
+
         // clear
         LCD.Clear();
 
@@ -120,17 +128,26 @@ void doGameplayLoop() {
         LCD.SetBackgroundColor(WHITE);
 
         // draw character
-        character.move(Vector2(xpos, ypos));
+        character.move(mousePos);
 
-        // draw fruits
+        // move fruits
         float dt = TimeNow()-lastTime;
-        for(Fruit f : projectiles) {
-            f.stepPath(dt);
+        for(Fruit* f : projectiles) {
+            f->stepPath(dt);
+            // check if its hitting the mouse
+            if(f->sprite()->isPointWithin(mousePos)){
+                cout << "touching!" << endl;
+            }
         }
         lastTime = TimeNow();
 
-        if (TimeNow() - lastFruitSpawnTime > 2) {
-            projectiles.push_back(Fruit(LEMON, 2));
+        // create new fruit
+        if (TimeNow() - lastFruitSpawnTime > 5) {
+            Fruit* newFruit = new Fruit(LEMON, 2, Vector2(Random.RandInt(), Random.RandInt()));
+            newFruit->sprite()->scale(2);
+
+            projectiles.push_back(newFruit);
+
             lastFruitSpawnTime = TimeNow();
         }
 

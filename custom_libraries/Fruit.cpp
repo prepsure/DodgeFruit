@@ -47,48 +47,45 @@ Vector2 kiwiPos(float t);
 Vector2 watermelonPos(float t);
 
 #define LEMON "lemon"
-Vector2 lemonpos(float t);
+Vector2 lemonpos(float t, Vector2 offset);
 
 
 
 class Fruit {
     public:
-        Fruit(string type = "lemon", float speed = 1) : sprite_("fruits/" + type, FRUIT_SIZE) {
+        Fruit(string type = "lemon", float speed = 1, Vector2 offset=Vector2()) :
+        sprite_("fruits/" + type, FRUIT_SIZE), offset_(offset.x(), offset.y()) {
             type_ = type;
-            time_ = 0;
             speed_ = speed;
+            cout << "reconstructing" << endl;
         }
 
         void stepPath(float dt) {
-            time_ += dt * speed_;
-            sprite_.move(lemonpos(time_));
+            t_ += dt * speed_;
+            sprite_.move(lemonpos(t_, offset_));
         }
 
-        Sprite sprite() {
-            return sprite_;
-        }
-
-        void scale(float n) {
-            sprite_.scale(n);
+        Sprite* sprite() {
+            return &sprite_;
         }
 
     private:
         Sprite sprite_;
         string type_;
-        float time_;
+        float t_ = 0;
         float speed_;
         Vector2 offset_;
 };
 
 
-Vector2 lemonpos(float t) {
-    return Vector2(SCREEN_SIZE_Y/2 * cos(t), SCREEN_SIZE_Y/2 * sin(t));
+Vector2 lemonpos(float t, Vector2 offset) {
+    return Vector2(SCREEN_SIZE_Y/2 * cos(t) + offset.x(), SCREEN_SIZE_Y/2 * sin(t) + offset.y());
 }
 
 Vector2 watermelonpos(float t) {
-
+    return Vector2();
 }
 
 Vector2 applepos(float t) {
-
+    return Vector2();
 }

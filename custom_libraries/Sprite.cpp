@@ -77,16 +77,23 @@ class Sprite {
         }
 
         bool isPointWithin(Vector2 screenPoint) {
-            float leftBound = pos().x() - size().x() * scale().x() * anchorPoint().x();
-            float topBound = pos().y() - size().y() * scale().y() * anchorPoint().y();
+
+            float modX = (int)pos().x() % (int)SCREEN_SIZE_X;
+            float modY = (int)pos().y() % (int)SCREEN_SIZE_Y;
+
+            float leftBound = modX - size().x() * scale().x() * anchorPoint().x();
+            float topBound = modY - size().y() * scale().y() * anchorPoint().y();
             float rightBound = leftBound + size().x() * scale().x();
             float bottomBound = topBound + size().y() * scale().y();
 
+            float screenPointModX = (int)screenPoint.x() % (int)SCREEN_SIZE_X;
+            float screenPointModY = (int)screenPoint.y() % (int)SCREEN_SIZE_Y;
+
             return
-                leftBound <= screenPoint.x() &&
-                rightBound >= screenPoint.x() &&
-                topBound <= screenPoint.y() &&
-                bottomBound >= screenPoint.y();
+                leftBound <= screenPointModX &&
+                rightBound >= screenPointModX &&
+                topBound <= screenPointModY &&
+                bottomBound >= screenPointModY;
         }
 
 
