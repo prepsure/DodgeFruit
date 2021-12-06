@@ -3,7 +3,7 @@
 #define SCREEN_SIZE_Y 240.0
 
 // gameplay params
-#define GAME_SCALE 4
+#define GAME_SCALE 3
 #define TIME_BETWEEN_FRUITS 2.0
 
 

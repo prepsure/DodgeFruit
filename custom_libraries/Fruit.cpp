@@ -41,7 +41,7 @@ float watermelonPos(float t);
 class Fruit {
     public:
         Fruit(string type) : sprite_(type, FRUIT_SIZE) {
-
+            type_ = type;
         }
 
     private:
