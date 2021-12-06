@@ -46,14 +46,14 @@ Vector2 kiwiPos(float t);
 #define WATERMELON "watermelon"
 Vector2 watermelonPos(float t);
 
-#define LEMON
+#define LEMON "lemon"
 Vector2 lemonpos(float t);
 
 
 
 class Fruit {
     public:
-        Fruit(string type, float speed) : sprite_("fruits/" + type, FRUIT_SIZE) {
+        Fruit(string type = "lemon", float speed = 1) : sprite_("fruits/" + type, FRUIT_SIZE) {
             type_ = type;
             time_ = 0;
             speed_ = speed;
@@ -77,9 +77,18 @@ class Fruit {
         string type_;
         float time_;
         float speed_;
+        Vector2 offset_;
 };
 
 
 Vector2 lemonpos(float t) {
     return Vector2(SCREEN_SIZE_Y/2 * cos(t), SCREEN_SIZE_Y/2 * sin(t));
+}
+
+Vector2 watermelonpos(float t) {
+
+}
+
+Vector2 applepos(float t) {
+
 }

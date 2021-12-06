@@ -19,6 +19,7 @@
 // c++ libraries
 #include <fstream>
 #include <iostream>
+#include <vector>
 
 
 void doGameplayLoop();
@@ -104,10 +105,10 @@ void doGameplayLoop() {
     character.scale(2);
 
 
-    Fruit lemon("lemon", 2);
-    lemon.scale(2);
+    vector<Fruit> projectiles;
 
     float lastTime = TimeNow();
+    float lastFruitSpawnTime = TimeNow();
 
     // game should keep playing as long as the screen is being touched
     int xpos, ypos;
@@ -122,8 +123,17 @@ void doGameplayLoop() {
         character.move(Vector2(xpos, ypos));
 
         // draw fruits
-        lemon.stepPath(TimeNow()-lastTime);
+        float dt = TimeNow()-lastTime;
+        for(Fruit f : projectiles) {
+            f.stepPath(dt);
+        }
         lastTime = TimeNow();
+
+        if (TimeNow() - lastFruitSpawnTime > 2) {
+            projectiles.push_back(Fruit(LEMON, 2));
+            lastFruitSpawnTime = TimeNow();
+        }
+
 
         // test if the player touched a fruit
 
