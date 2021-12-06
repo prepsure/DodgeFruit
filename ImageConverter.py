@@ -1,8 +1,11 @@
 from PIL import Image
 
 
-raw = 'raw_images/creditsbackground.png'
-out = 'sprites/menu/credits_background.spr'
+
+
+raw = 'raw_images/menu/instructions1.png'
+
+out = 'sprites/menu/instructions1.spr'
 
 
 # read from the raw image
