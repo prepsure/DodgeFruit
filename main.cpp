@@ -145,7 +145,14 @@ void doGameplayLoop() {
         if (TimeNow() - lastFruitSpawnTime > 5) {
             Fruit* newFruit = new Fruit(LEMON, 2, Vector2(Random.RandInt(), Random.RandInt()));
             newFruit->sprite()->scale(2);
+            projectiles.push_back(newFruit);
 
+            newFruit = new Fruit(WATERMELON, 2, Vector2(Random.RandInt(), Random.RandInt()));
+            newFruit->sprite()->scale(2);
+            projectiles.push_back(newFruit);
+
+            newFruit = new Fruit(APPLE, 2, Vector2(Random.RandInt(), Random.RandInt()));
+            newFruit->sprite()->scale(2);
             projectiles.push_back(newFruit);
 
             lastFruitSpawnTime = TimeNow();

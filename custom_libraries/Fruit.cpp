@@ -29,22 +29,22 @@ using namespace std;
 
 // fruit types!
 #define APPLE "apple"
-Vector2 applePos(float t);
+Vector2 applepos(float t, Vector2 offset);
 
-#define BANANA "banana"
-Vector2 bananaPos(float t);
+// #define BANANA "banana"
+// Vector2 bananaPos(float t);
 
-#define TANGARINE "tangerine"
-Vector2 tangerinePos(float t);
+// #define TANGARINE "tangerine"
+// Vector2 tangerinePos(float t);
 
-#define STRAWBERRY "strawberry"
-Vector2 strawberryPos(float t);
+// #define STRAWBERRY "strawberry"
+// Vector2 strawberryPos(float t);
 
-#define KIWI "kiwi"
-Vector2 kiwiPos(float t);
+// #define KIWI "kiwi"
+// Vector2 kiwiPos(float t);
 
 #define WATERMELON "watermelon"
-Vector2 watermelonPos(float t);
+Vector2 watermelonpos(float t, Vector2 offset);
 
 #define LEMON "lemon"
 Vector2 lemonpos(float t, Vector2 offset);
@@ -79,13 +79,16 @@ class Fruit {
 
 
 Vector2 lemonpos(float t, Vector2 offset) {
+    //makes a circle
     return Vector2(SCREEN_SIZE_Y/2 * cos(t) + offset.x(), SCREEN_SIZE_Y/2 * sin(t) + offset.y());
 }
 
-Vector2 watermelonpos(float t) {
-    return Vector2();
+Vector2 watermelonpos(float t, Vector2 offset) {
+    //makes an infinity
+    return Vector2(SCREEN_SIZE_Y/2 * cos(t) + offset.x(), SCREEN_SIZE_Y/2*((sin(2*t))/2) + offset.y());
 }
 
-Vector2 applepos(float t) {
-    return Vector2();
+Vector2 applepos(float t, Vector2 offset) {
+    //makes a star
+    //return Vector2(SCREEN_SIZE_Y/2 * pow(cos(t),5) + offset.x(), SCREEN_SIZE_Y/2 * pow(sin(t),5) + offset.y());
 }
