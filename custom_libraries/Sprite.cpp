@@ -48,6 +48,8 @@ class Sprite {
             int pixelCount = 0;
             int next;
 
+            cout << spriteSize.x() << endl;
+
             while(sprFile >> next){
                 int x = pixelCount / (int)spriteSize.x();
                 int y = pixelCount % (int)spriteSize.x();
@@ -133,7 +135,7 @@ class Sprite {
         Vector2 scale_ = GAME_SCALE * Vector2(1, 1);
         Vector2 anchorPoint_ = Vector2(0, 0);
 
-        int image[SPRITE_SIZE_X +1][SPRITE_SIZE_Y +1];
+        int image[SPRITE_SIZE_X + 1][SPRITE_SIZE_Y + 1];
 
         void drawScaledPixel(Vector2 pos) {
             pos -= size() * scale() * anchorPoint();

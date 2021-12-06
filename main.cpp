@@ -14,6 +14,7 @@
 // paige libraries :)
 #include "custom_libraries/Vector.cpp"
 #include "custom_libraries/Sprite.cpp"
+#include "custom_libraries/Fruit.cpp"
 
 // c++ libraries
 #include <fstream>
@@ -100,6 +101,13 @@ void doGameplayLoop() {
     // make character
     Sprite character("pointer", Vector2(8, 8));
     character.anchorPoint(Vector2(0.5, 0.5));
+    character.scale(2);
+
+
+    Fruit lemon("lemon", 2);
+    lemon.scale(2);
+
+    float lastTime = TimeNow();
 
     // game should keep playing as long as the screen is being touched
     int xpos, ypos;
@@ -114,7 +122,8 @@ void doGameplayLoop() {
         character.move(Vector2(xpos, ypos));
 
         // draw fruits
-
+        lemon.stepPath(TimeNow()-lastTime);
+        lastTime = TimeNow();
 
         // test if the player touched a fruit
 
@@ -133,6 +142,7 @@ void showStatsScreen() {
     LCD.Clear();
 
     Sprite statsBack("menu/stats_background", Vector2(80, 60));
+    statsBack.scale(3);
     statsBack.anchorPoint(Vector2(0.5, 0.5));
     statsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
 
@@ -146,6 +156,7 @@ void showHowToScreen() {
     LCD.Clear();
 
     Sprite howToBack("menu/instruction_background", Vector2(80, 60));
+    howToBack.scale(3);
     howToBack.anchorPoint(Vector2(0.5, 0.5));
     howToBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
 
