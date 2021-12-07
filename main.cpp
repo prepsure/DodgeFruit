@@ -234,7 +234,8 @@ void showStatsScreen() {
 
     //display high schore
     float highScore = playerHighScore();
-    LCD.WriteAt(highScore, 111, 111);
+    LCD.SetFontColor(BLACK);
+    LCD.WriteAt(highScore, 200, 91);
     
     LCD.Update();
 
