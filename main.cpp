@@ -25,6 +25,7 @@
 
 
 void doGameplayLoop();
+Fruit* makeRandomFruit();
 void showGameOverScreen();
 
 void showStatsScreen();
@@ -116,9 +117,11 @@ void doGameplayLoop() {
     float lastTime = TimeNow();
     float lastFruitSpawnTime = TimeNow();
 
+    bool gameOver = false;
+
     // game should keep playing as long as the screen is being touched
     int xpos, ypos;
-    while (LCD.Touch(&xpos, &ypos)) {
+    while (LCD.Touch(&xpos, &ypos) && !gameOver) {
         Vector2 mousePos = Vector2(xpos, ypos);
 
         // clear
@@ -130,40 +133,45 @@ void doGameplayLoop() {
         // draw character
         character.move(mousePos);
 
-        // move fruits
+        // step fruits
         float dt = TimeNow()-lastTime;
         for(Fruit* f : projectiles) {
+
             f->stepPath(dt);
+
             // check if its hitting the mouse
             if(f->sprite()->isPointWithin(mousePos)){
-                cout << "touching!" << endl;
+                gameOver = true;
             }
+
         }
         lastTime = TimeNow();
 
         // create new fruit
         if (TimeNow() - lastFruitSpawnTime > 5) {
-            Fruit* newFruit = new Fruit(LEMON, 2, Vector2(Random.RandInt(), Random.RandInt()));
-            newFruit->sprite()->scale(2);
-            projectiles.push_back(newFruit);
-
-            newFruit = new Fruit(WATERMELON, 2, Vector2(Random.RandInt(), Random.RandInt()));
-            newFruit->sprite()->scale(2);
-            projectiles.push_back(newFruit);
-
-            newFruit = new Fruit(APPLE, 2, Vector2(Random.RandInt(), Random.RandInt()));
-            newFruit->sprite()->scale(2);
-            projectiles.push_back(newFruit);
-
+            projectiles.push_back(makeRandomFruit());
             lastFruitSpawnTime = TimeNow();
         }
-
-
-        // test if the player touched a fruit
 
         // update screen
         LCD.Update();
     }
+
+    // show gameover screen
+}
+
+
+Fruit* makeRandomFruit() {
+    string fruits[] = {LEMON, APPLE, WATERMELON};
+    string chosenFruit = fruits[Random.RandInt() % 3];
+
+    Vector2 spawnPos =  Vector2(Random.RandInt(), Random.RandInt());
+
+    Fruit* newFruit = new Fruit(chosenFruit, 1, spawnPos);
+    newFruit->sprite()->anchorPoint(Vector2(0.5, 0.5));
+    newFruit->sprite()->scale(2);
+
+    return newFruit;
 }
 
 

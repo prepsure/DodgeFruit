@@ -55,7 +55,14 @@ class Fruit {
 
         void stepPath(float dt) {
             t_ += dt * speed_;
-            sprite_.move(lemonpos(t_, offset_));
+
+            if(type_ == APPLE) {
+                sprite_.move(applepos(t_, offset_));
+            } else if (type_ == WATERMELON) {
+                sprite_.move(watermelonpos(t_, offset_));
+            } else if (type_ == LEMON) {
+                sprite_.move(lemonpos(t_, offset_));
+            }
         }
 
         Sprite* sprite() {
@@ -92,5 +99,5 @@ Vector2 watermelonpos(float t, Vector2 offset) {
 
 // circle
 Vector2 lemonpos(float t, Vector2 offset) {
-    return Vector2(SCREEN_SIZE_Y/2 * cos(t) + offset.x(), SCREEN_SIZE_Y/2 * sin(t) + offset.y());
+    return Vector2(SCREEN_SIZE_Y/2 * (cos(t) + 1), SCREEN_SIZE_Y/2 * (sin(t) + 1));
 }
