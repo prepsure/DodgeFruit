@@ -41,6 +41,7 @@ void waitForTap();
 
 void writeTime(float);
 float playerHighScore();
+int gameCount();
 
 /*
  * Entry point to the application
@@ -191,6 +192,8 @@ void doGameplayLoop() {
     gameOverScreen.move(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
 
     writeTime(playerTime);
+    LCD.SetFontColor(CYAN);
+    LCD.WriteAt(playerTime, 187, 166);
 
     waitForTap();
 }
@@ -232,11 +235,15 @@ void showStatsScreen() {
 
     statsBack.draw();
 
-    //display high schore
+    //display high score
     float highScore = playerHighScore();
     LCD.SetFontColor(BLACK);
     LCD.WriteAt(highScore, 200, 91);
     
+    //display game count
+    int gameCounter = gameCount();
+    LCD.SetFontColor(BLACK);
+    LCD.WriteAt(gameCounter, 250, 130);
     LCD.Update();
 
     waitForBackButtonPress();
@@ -332,4 +339,20 @@ float playerHighScore() {
     playerTimeFile.close();
 
     return highScore;
+}
+
+int gameCount() {
+
+    ifstream playerTimeFile;
+    playerTimeFile.open("playerTimeFile.txt");
+    
+    int counter = 0;
+    float temp;
+    while (playerTimeFile >> temp){
+        counter++;
+    }
+    cout << counter;
+    playerTimeFile.close();
+
+    return counter;
 }
