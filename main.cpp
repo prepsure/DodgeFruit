@@ -56,8 +56,7 @@ int main() {
 /*
  * menu screens!
  */
-
- void showMenu() {
+void showMenu() {
     // display menu
     Sprite logo("menu/logo", Vector2(41, 21));
     logo.scale(MENU_SCALE);
@@ -112,7 +111,8 @@ int main() {
         // update screen
         LCD.Update();
     }
- }
+}
+
 
 void showStatsScreen() {
     LCD.Clear();
@@ -139,6 +139,7 @@ void showStatsScreen() {
     waitForBackButtonPress();
 }
 
+
 void showHowToScreen() {
     LCD.Clear();
 
@@ -152,6 +153,7 @@ void showHowToScreen() {
 
     waitForBackButtonPress();
 }
+
 
 void showCredits() {
     LCD.Clear();
@@ -244,7 +246,6 @@ void doGameplayLoop() {
     waitForTap();
 }
 
-
 // makes and returns a new random fruit to be used in gameplay
 Fruit* makeRandomFruit() {
     // list all possible fruits
@@ -265,7 +266,6 @@ Fruit* makeRandomFruit() {
 
     return newFruit;
 }
-
 
 // final screen after the player touches a fruit
 void showGameOverScreen(float finalTime) {
