@@ -54,8 +54,10 @@ class Fruit {
         }
 
         void stepPath(float dt) {
+            // time * speed = position
             t_ += dt * speed_;
 
+            // pick function based on fruit type
             if(type_ == APPLE) {
                 sprite_.move(applepos(t_, offset_));
             } else if (type_ == WATERMELON) {

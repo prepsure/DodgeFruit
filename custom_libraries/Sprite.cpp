@@ -36,11 +36,13 @@ class Sprite {
             swapImage(spriteName, spriteSize);
         }
 
+        // sets the positions, then draws the sprite to the graphics buffe
         void move(Vector2 pos) {
             pos_ = pos;
             draw();
         }
 
+        // replaces the sprite image
         void swapImage(string spriteName, Vector2 spriteSize) {
             ifstream sprFile;
             sprFile.open("sprites/" + spriteName + ".spr");
@@ -60,6 +62,7 @@ class Sprite {
             sprFile.close();
         }
 
+        // draw the sprite onto the graphics buffer
         void draw() {
             for(int i = 0; i < size_.x(); i++) {
                 for(int j = 0; j < size_.y(); j++) {
@@ -76,8 +79,8 @@ class Sprite {
             }
         }
 
+        // checks whether screenpoint is overlapping the sprite (useful for collision)
         bool isPointWithin(Vector2 screenPoint) {
-
             float modX = (int)pos().x() % (int)SCREEN_SIZE_X;
             float modY = (int)pos().y() % (int)SCREEN_SIZE_Y;
 
@@ -144,6 +147,7 @@ class Sprite {
 
         int image[SPRITE_SIZE_X + 1][SPRITE_SIZE_Y + 1];
 
+        // draws a pixel the size of the sprite's scale
         void drawScaledPixel(Vector2 pos) {
             pos -= size() * scale() * anchorPoint();
 

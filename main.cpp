@@ -24,14 +24,16 @@
 #include <vector>
 
 
-void doGameplayLoop();
-Fruit* makeRandomFruit();
-void showGameOverScreen();
+void showMenu();
 
 void showStatsScreen();
 void showHowToScreen();
 void showCredits();
 void quitGame();
+
+void doGameplayLoop();
+Fruit* makeRandomFruit();
+void showGameOverScreen();
 
 void waitForBackButtonPress();
 
@@ -49,6 +51,7 @@ int gameCount();
 int main() {
     // Clear background
 
+    // display menu
     Sprite logo("menu/logo", Vector2(41, 21));
     logo.scale(MENU_SCALE);
     logo.move(Vector2(7, 4) * MENU_SCALE);
@@ -220,10 +223,13 @@ Fruit* makeRandomFruit() {
 }
 
 
-
 /*
  * menu screens!!
  */
+
+ void showMenu() {
+
+ }
 
 void showStatsScreen() {
     LCD.Clear();
