@@ -47,32 +47,26 @@ void writeTime(float);
  */
 int main() {
     // Clear background
-    Vector2 menuOffset(0, 0);
 
-    Sprite logo("menu/splash", Vector2(48, 24));
+    Sprite logo("menu/logo", Vector2(41, 21));
     logo.scale(MENU_SCALE);
-    logo.anchorPoint(Vector2(0.5, 0));
-    logo.move(Vector2(SCREEN_SIZE_X/2, 2*MENU_SCALE) + menuOffset);
+    logo.move(Vector2(7, 4) * MENU_SCALE);
 
-    Sprite play("menu/play_button", Vector2(24, 7));
+    Sprite play("menu/play_button", Vector2(46, 25));
     play.scale(MENU_SCALE);
-    play.anchorPoint(Vector2(0.5, 0));
-    play.move(Vector2(SCREEN_SIZE_X/2, 27*MENU_SCALE) + menuOffset);
+    play.move(Vector2(4, 30) * MENU_SCALE);
 
-    Sprite stats("menu/stats_button", Vector2(24, 7));
+    Sprite stats("menu/stats_button", Vector2(26, 19));
     stats.scale(MENU_SCALE);
-    stats.anchorPoint(Vector2(0.5, 0));
-    stats.move(Vector2(SCREEN_SIZE_X/2, 35*MENU_SCALE) + menuOffset);
+    stats.move(Vector2(52, 2) * MENU_SCALE);
 
-    Sprite howto("menu/howtobutton", Vector2(24, 7));
+    Sprite howto("menu/how_to_button", Vector2(27, 16));
     howto.scale(MENU_SCALE);
-    howto.anchorPoint(Vector2(0.5, 0));
-    howto.move(Vector2(SCREEN_SIZE_X/2, 43*MENU_SCALE) + menuOffset);
+    howto.move(Vector2(52, 22) * MENU_SCALE);
 
-    Sprite credits("menu/creditsbutton", Vector2(24, 7));
+    Sprite credits("menu/credits_button", Vector2(26, 15));
     credits.scale(MENU_SCALE);
-    credits.anchorPoint(Vector2(0.5, 0));
-    credits.move(Vector2(SCREEN_SIZE_X/2, 51*MENU_SCALE) + menuOffset);
+    credits.move(Vector2(52, 41) * MENU_SCALE);
 
     // start the menu
     while (true) {
@@ -100,6 +94,8 @@ int main() {
             } else if (credits.isPointWithin(screenPoint)) {
                 showCredits();
             }
+
+            waitForNoTouch();
         }
 
         // update screen
@@ -122,7 +118,7 @@ void doGameplayLoop() {
     vector<Fruit*> projectiles;
 
     float lastTime = TimeNow();
-    float lastFruitSpawnTime = TimeNow();
+    float lastFruitSpawnTime = TimeNow() - 4;
 
     float playerTime = 0.0;
 
@@ -209,8 +205,11 @@ Fruit* makeRandomFruit() {
     // choose a spawning position for the fruit
     Vector2 spawnPos =  Vector2(Random.RandInt(), Random.RandInt());
 
+    // choose a random speed for the fruit between 1 and 2
+    float speed = 1 + (Random.RandInt() % 10)/10.0;
+
     // make the fruit and scale it
-    Fruit* newFruit = new Fruit(chosenFruit, 1, spawnPos);
+    Fruit* newFruit = new Fruit(chosenFruit, speed, spawnPos);
     newFruit->sprite()->anchorPoint(Vector2(0.5, 0.5));
     newFruit->sprite()->scale(2);
 

@@ -99,5 +99,5 @@ Vector2 watermelonpos(float t, Vector2 offset) {
 
 // circle
 Vector2 lemonpos(float t, Vector2 offset) {
-    return Vector2(SCREEN_SIZE_Y/2 * (cos(t) + 1), SCREEN_SIZE_Y/2 * (sin(t) + 1));
+    return Vector2(SCREEN_SIZE_Y/2 * cos(t) + offset.x(), SCREEN_SIZE_Y/2 * sin(t) + offset.y());
 }

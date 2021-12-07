@@ -3,8 +3,8 @@ from PIL import Image
 
 
 
-raw = 'raw_images/menu/game_over_background.png'
-out = 'sprites/menu/game_over_background.spr'
+raw = 'raw_images/menu/play_button.png'
+out = 'sprites/menu/play_button.spr'
 
 
 # read from the raw image
