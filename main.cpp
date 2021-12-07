@@ -116,13 +116,15 @@ void doGameplayLoop() {
     character.anchorPoint(Vector2(0.5, 0.5));
     character.scale(2);
 
+    // fruit list
     vector<Fruit*> projectiles;
 
+    // timing vars
     float lastTime = TimeNow();
     float lastFruitSpawnTime = TimeNow() - 4;
 
+    // gameplay vars
     float playerTime = 0.0;
-
     bool gameOver = false;
 
     // game should keep playing as long as the screen is being touched
@@ -139,12 +141,6 @@ void doGameplayLoop() {
         // draw character
         character.move(mousePos);
 
-
-
-        
-
-    
-        
         // step fruits
         float dt = TimeNow()-lastTime;
         for(Fruit* f : projectiles) {
@@ -172,8 +168,8 @@ void doGameplayLoop() {
         cout << playerTime << endl;
 
         //write current time to top right corner of screen
+        LCD.WriteAt(playerTime, 240, 10);
 
-        LCD.WriteAt(playerTime, 230, 0);
         // update screen
         LCD.Update();
     }
@@ -187,11 +183,15 @@ void doGameplayLoop() {
     LCD.SetBackgroundColor(BLACK);
     LCD.Clear();
 
+    // draw gameover screen in the middle
     Sprite gameOverScreen("menu/game_over_background", Vector2(80, 60));
     gameOverScreen.anchorPoint(Vector2(0.5, 0.5));
     gameOverScreen.move(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
 
+    // write time to file
     writeTime(playerTime);
+
+    // write final time to screen
     LCD.SetFontColor(CYAN);
     LCD.WriteAt(playerTime, 187, 166);
 
@@ -228,6 +228,7 @@ Fruit* makeRandomFruit() {
 void showStatsScreen() {
     LCD.Clear();
 
+    // draw stats background in the center of the screen
     Sprite statsBack("menu/stats_background", Vector2(80, 60));
     statsBack.scale(3);
     statsBack.anchorPoint(Vector2(0.5, 0.5));
@@ -252,11 +253,11 @@ void showStatsScreen() {
 void showHowToScreen() {
     LCD.Clear();
 
+    // draw howto screen in the middle
     Sprite howToBack("menu/instruction_background", Vector2(80, 60));
     howToBack.scale(3);
     howToBack.anchorPoint(Vector2(0.5, 0.5));
     howToBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
-
     howToBack.draw();
     LCD.Update();
 
@@ -270,7 +271,6 @@ void showCredits() {
     creditsBack.scale(4);
     creditsBack.anchorPoint(Vector2(0.5, 0.5));
     creditsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
-
     creditsBack.draw();
     LCD.Update();
 
@@ -278,19 +278,19 @@ void showCredits() {
 }
 
 void waitForBackButtonPress() {
+    // draw back button
     Sprite backButton("menu/back_button", Vector2(16, 8));
     backButton.anchorPoint(Vector2(0, 1));
     backButton.pos(Vector2(8, SCREEN_SIZE_Y - 8));//
     backButton.draw();
-
     LCD.Update();
 
+    // wait for player to touch the button
     bool touching = false;
     int xpos=0, ypos=0;
 
     while(!(touching && backButton.isPointWithin(Vector2(xpos, ypos)))) {
         touching = LCD.Touch(&xpos, &ypos);
-        Vector2 screenPoint(xpos, ypos);
     }
 }
 
@@ -316,6 +316,7 @@ void waitForTap() {
     waitForNoTouch();
 }
 
+// write time to file
 void writeTime(float t) {
     ofstream playerTimeFile;
     playerTimeFile.open("playerTimeFile.txt", ofstream::app);
@@ -324,8 +325,8 @@ void writeTime(float t) {
 
 }
 
+// find the player's highscore from the file
 float playerHighScore() {
-
     ifstream playerTimeFile;
     playerTimeFile.open("playerTimeFile.txt");
     
@@ -341,11 +342,11 @@ float playerHighScore() {
     return highScore;
 }
 
+// count the saved games
 int gameCount() {
-
     ifstream playerTimeFile;
     playerTimeFile.open("playerTimeFile.txt");
-    
+
     int counter = 0;
     float temp;
     while (playerTimeFile >> temp){
