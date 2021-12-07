@@ -1,11 +1,7 @@
 from PIL import Image
 
-
-
-
-raw = 'raw_images/menu/play_button.png'
-out = 'sprites/menu/play_button.spr'
-
+raw = 'raw_images/menu/instruction_background.png'
+out = 'sprites/menu/instruction_background.spr'
 
 # read from the raw image
 
