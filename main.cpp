@@ -168,7 +168,7 @@ void doGameplayLoop() {
         playerTime = playerTime + dt;
 
         //write current time to top right corner of screen
-        LCD.WriteAt(playerTime, 250, 10);
+        LCD.WriteAt(playerTime, 240, 15);
 
         // update screen
         LCD.Update();
