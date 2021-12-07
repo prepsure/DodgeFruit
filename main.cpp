@@ -40,7 +40,7 @@ void waitForNoTouch();
 void waitForTap();
 
 void writeTime(float);
-void playerHighScore(float);
+float playerHighScore();
 
 /*
  * Entry point to the application
@@ -233,12 +233,9 @@ void showStatsScreen() {
     statsBack.draw();
 
     //display high schore
-    float hS;
-    playerHighScore(hS);
-    LCD.WriteAt(hS, 111, 111);
+    float highScore = playerHighScore();
+    LCD.WriteAt(highScore, 111, 111);
     
-
-
     LCD.Update();
 
     waitForBackButtonPress();
@@ -319,19 +316,19 @@ void writeTime(float t) {
 
 }
 
-void playerHighScore(float hS) {
+float playerHighScore() {
 
     ifstream playerTimeFile;
     playerTimeFile.open("playerTimeFile.txt");
     
-    float score = 0, highScore;
+    float score = 0, highScore=0;
     while (playerTimeFile >> score){
-        if (score > score) {
+        if (highScore < score) {
             score = highScore;
         }
-        if(playerTimeFile.eof()){
-            cout << highScore;
-        }
     }
+    cout << highScore;
     playerTimeFile.close();
+
+    return highScore;
 }
