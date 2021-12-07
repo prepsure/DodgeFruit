@@ -35,6 +35,10 @@ void quitGame();
 
 void waitForBackButtonPress();
 
+void waitForTouch();
+void waitForNoTouch();
+void waitForTap();
+
 /*
  * Entry point to the application
  */
@@ -69,7 +73,7 @@ int main() {
 
     // start the menu
     while (true) {
-        LCD.SetBackgroundColor(4200974);
+        LCD.SetBackgroundColor(BLACK);
         LCD.Clear();
 
         // draw menu
@@ -128,7 +132,7 @@ void doGameplayLoop() {
         LCD.Clear();
 
         // draw background
-        LCD.SetBackgroundColor(WHITE);
+        LCD.SetBackgroundColor(BLACK);
 
         // draw character
         character.move(mousePos);
@@ -157,16 +161,33 @@ void doGameplayLoop() {
         LCD.Update();
     }
 
+    // garbage collect fruit
+    for(Fruit* f : projectiles) {
+        delete f;
+    }
+
     // show gameover screen
+    LCD.SetBackgroundColor(BLACK);
+    LCD.Clear();
+
+    Sprite gameOverScreen("menu/game_over_background", Vector2(80, 60));
+    gameOverScreen.anchorPoint(Vector2(0.5, 0.5));
+    gameOverScreen.move(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+
+    waitForTap();
 }
 
 
 Fruit* makeRandomFruit() {
+    // list all possible fruits
     string fruits[] = {LEMON, APPLE, WATERMELON};
+    // choose a random one
     string chosenFruit = fruits[Random.RandInt() % 3];
 
+    // choose a spawning position for the fruit
     Vector2 spawnPos =  Vector2(Random.RandInt(), Random.RandInt());
 
+    // make the fruit and scale it
     Fruit* newFruit = new Fruit(chosenFruit, 1, spawnPos);
     newFruit->sprite()->anchorPoint(Vector2(0.5, 0.5));
     newFruit->sprite()->scale(2);
@@ -212,6 +233,7 @@ void showCredits() {
     LCD.Clear();
 
     Sprite creditsBack("menu/credits_background", Vector2(80, 60));
+    creditsBack.scale(4);
     creditsBack.anchorPoint(Vector2(0.5, 0.5));
     creditsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
 
@@ -236,4 +258,26 @@ void waitForBackButtonPress() {
         touching = LCD.Touch(&xpos, &ypos);
         Vector2 screenPoint(xpos, ypos);
     }
+}
+
+
+// waiting functions
+void waitForNoTouch() {
+    int x,y;
+    while (LCD.Touch(&x, &y)) {
+        Sleep(1.0/60.0);
+    }
+}
+
+void waitForTouch() {
+    int x,y;
+    while (!LCD.Touch(&x, &y)) {
+        Sleep(1.0/60.0);
+    }
+}
+
+void waitForTap() {
+    waitForNoTouch();
+    waitForTouch();
+    waitForNoTouch();
 }
