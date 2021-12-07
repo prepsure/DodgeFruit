@@ -39,6 +39,9 @@ void waitForTouch();
 void waitForNoTouch();
 void waitForTap();
 
+void writeTime(float);
+// void playerHighScore(float);
+
 /*
  * Entry point to the application
  */
@@ -121,6 +124,8 @@ void doGameplayLoop() {
     float lastTime = TimeNow();
     float lastFruitSpawnTime = TimeNow();
 
+    float playerTime = 0.0;
+
     bool gameOver = false;
 
     // game should keep playing as long as the screen is being touched
@@ -137,6 +142,12 @@ void doGameplayLoop() {
         // draw character
         character.move(mousePos);
 
+
+
+        
+
+    
+        
         // step fruits
         float dt = TimeNow()-lastTime;
         for(Fruit* f : projectiles) {
@@ -157,6 +168,15 @@ void doGameplayLoop() {
             lastFruitSpawnTime = TimeNow();
         }
 
+        //increment timer
+        playerTime = playerTime + dt;
+
+        //debug
+        cout << playerTime << endl;
+
+        //write current time to top right corner of screen
+
+        LCD.WriteAt(playerTime, 230, 0);
         // update screen
         LCD.Update();
     }
@@ -173,6 +193,8 @@ void doGameplayLoop() {
     Sprite gameOverScreen("menu/game_over_background", Vector2(80, 60));
     gameOverScreen.anchorPoint(Vector2(0.5, 0.5));
     gameOverScreen.move(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+
+    writeTime(playerTime);
 
     waitForTap();
 }
@@ -210,6 +232,14 @@ void showStatsScreen() {
     statsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
 
     statsBack.draw();
+
+    // float hS;
+    // playerHighScore(hS);
+
+    // LCD.WriteAt(hS, 111, 111);
+    
+
+
     LCD.Update();
 
     waitForBackButtonPress();
@@ -281,3 +311,27 @@ void waitForTap() {
     waitForTouch();
     waitForNoTouch();
 }
+
+void writeTime(float t) {
+    ofstream playerTimeFile;
+    playerTimeFile.open("playerTimeFile.txt", ofstream::app);
+    playerTimeFile  << t << endl;
+    playerTimeFile.close();
+
+}
+
+// void playerHighScore(float hS) {
+
+//     ifstream playerTimeFile;
+//     playerTimeFile.open("playerTimeFile.txt");
+//     float score, highScore;
+//     while (cin >> score){
+//         if (score > score) {
+//             score = highScore;
+//         }
+//         if(playerTimeFile.eof()){
+//             cout << highScore;
+//         }
+//     }
+//     playerTimeFile.close();
+// }
