@@ -88,7 +88,7 @@ Vector2 applepos(float t, Vector2 offset) {
 
 // diamond
 Vector2 tangerinePos(float t, Vector2 offset) {
-    return Vector2(SCREEN_SIZE_Y/2 * t, -1.0/((int)offset.y() % 10) * t * SCREEN_SIZE_Y/2);
+    return Vector2(SCREEN_SIZE_Y/2 * t + offset.x(), SCREEN_SIZE_Y/2 * sin(t) + offset.y());
 }
 
 // sin wave

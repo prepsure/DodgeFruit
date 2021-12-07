@@ -79,6 +79,8 @@ class Sprite {
 
         // checks whether screenpoint is overlapping the sprite (useful for collision)
         bool isPointWithin(Vector2 screenPoint) {
+            // need to mod position because the simulator does that as well
+            // eg: if you draw off the screen to the right it'll wrap around to the left
             float modX = (int)pos().x() % (int)SCREEN_SIZE_X;
             float modY = (int)pos().y() % (int)SCREEN_SIZE_Y;
 
@@ -90,6 +92,7 @@ class Sprite {
             float screenPointModX = (int)screenPoint.x() % (int)SCREEN_SIZE_X;
             float screenPointModY = (int)screenPoint.y() % (int)SCREEN_SIZE_Y;
 
+            // check that the screenpoint is within the bounds, returning false if any of them fail
             return
                 leftBound <= screenPointModX &&
                 rightBound >= screenPointModX &&

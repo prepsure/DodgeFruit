@@ -33,7 +33,7 @@ void quitGame();
 
 void doGameplayLoop();
 Fruit* makeRandomFruit();
-void showGameOverScreen();
+void showGameOverScreen(float);
 
 void waitForBackButtonPress();
 
@@ -49,8 +49,15 @@ int gameCount();
  * Entry point to the application
  */
 int main() {
-    // Clear background
+    showMenu();
+    return 0;
+}
 
+/*
+ * menu screens!
+ */
+
+ void showMenu() {
     // display menu
     Sprite logo("menu/logo", Vector2(41, 21));
     logo.scale(MENU_SCALE);
@@ -105,8 +112,58 @@ int main() {
         // update screen
         LCD.Update();
     }
+ }
 
-    return 0;
+void showStatsScreen() {
+    LCD.Clear();
+
+    // draw stats background in the center of the screen
+    Sprite statsBack("menu/stats_background", Vector2(80, 60));
+    statsBack.scale(3);
+    statsBack.anchorPoint(Vector2(0.5, 0.5));
+    statsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+
+    statsBack.draw();
+
+    //display high score
+    float highScore = playerHighScore();
+    LCD.SetFontColor(BLACK);
+    LCD.WriteAt(highScore, 200, 91);
+
+    //display game count
+    int gameCounter = gameCount();
+    LCD.SetFontColor(BLACK);
+    LCD.WriteAt(gameCounter, 250, 130);
+    LCD.Update();
+
+    waitForBackButtonPress();
+}
+
+void showHowToScreen() {
+    LCD.Clear();
+
+    // draw howto screen in the middle
+    Sprite howToBack("menu/instruction_background", Vector2(80, 60));
+    howToBack.scale(3);
+    howToBack.anchorPoint(Vector2(0.5, 0.5));
+    howToBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+    howToBack.draw();
+    LCD.Update();
+
+    waitForBackButtonPress();
+}
+
+void showCredits() {
+    LCD.Clear();
+
+    Sprite creditsBack("menu/credits_background", Vector2(80, 60));
+    creditsBack.scale(4);
+    creditsBack.anchorPoint(Vector2(0.5, 0.5));
+    creditsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+    creditsBack.draw();
+    LCD.Update();
+
+    waitForBackButtonPress();
 }
 
 
@@ -179,31 +236,21 @@ void doGameplayLoop() {
         delete f;
     }
 
-    // show gameover screen
-    LCD.SetBackgroundColor(BLACK);
-    LCD.Clear();
-
-    // draw gameover screen in the middle
-    Sprite gameOverScreen("menu/game_over_background", Vector2(80, 60));
-    gameOverScreen.anchorPoint(Vector2(0.5, 0.5));
-    gameOverScreen.move(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+    showGameOverScreen(playerTime);
 
     // write time to file
     writeTime(playerTime);
-
-    // write final time to screen
-    LCD.SetFontColor(CYAN);
-    LCD.WriteAt(playerTime, 187, 166);
 
     waitForTap();
 }
 
 
+// makes and returns a new random fruit to be used in gameplay
 Fruit* makeRandomFruit() {
     // list all possible fruits
     string fruits[] = {LEMON, APPLE, WATERMELON, TANGERINE};
     // choose a random one
-    string chosenFruit = fruits[Random.RandInt() % 3];
+    string chosenFruit = fruits[Random.RandInt() % 4];
 
     // choose a spawning position for the fruit
     Vector2 spawnPos =  Vector2(Random.RandInt(), Random.RandInt());
@@ -220,64 +267,21 @@ Fruit* makeRandomFruit() {
 }
 
 
-/*
- * menu screens!!
- */
-
- void showMenu() {
-
- }
-
-void showStatsScreen() {
+// final screen after the player touches a fruit
+void showGameOverScreen(float finalTime) {
+    LCD.SetBackgroundColor(BLACK);
     LCD.Clear();
 
-    // draw stats background in the center of the screen
-    Sprite statsBack("menu/stats_background", Vector2(80, 60));
-    statsBack.scale(3);
-    statsBack.anchorPoint(Vector2(0.5, 0.5));
-    statsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
+    // draw gameover screen in the middle
+    Sprite gameOverScreen("menu/game_over_background", Vector2(80, 60));
+    gameOverScreen.anchorPoint(Vector2(0.5, 0.5));
+    gameOverScreen.move(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
 
-    statsBack.draw();
+    // write final time to screen
+    LCD.SetFontColor(CYAN);
+    LCD.WriteAt(finalTime, 187, 166);
 
-    //display high score
-    float highScore = playerHighScore();
-    LCD.SetFontColor(BLACK);
-    LCD.WriteAt(highScore, 200, 91);
-    
-    //display game count
-    int gameCounter = gameCount();
-    LCD.SetFontColor(BLACK);
-    LCD.WriteAt(gameCounter, 250, 130);
     LCD.Update();
-
-    waitForBackButtonPress();
-}
-
-void showHowToScreen() {
-    LCD.Clear();
-
-    // draw howto screen in the middle
-    Sprite howToBack("menu/instruction_background", Vector2(80, 60));
-    howToBack.scale(3);
-    howToBack.anchorPoint(Vector2(0.5, 0.5));
-    howToBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
-    howToBack.draw();
-    LCD.Update();
-
-    waitForBackButtonPress();
-}
-
-void showCredits() {
-    LCD.Clear();
-
-    Sprite creditsBack("menu/credits_background", Vector2(80, 60));
-    creditsBack.scale(4);
-    creditsBack.anchorPoint(Vector2(0.5, 0.5));
-    creditsBack.pos(Vector2(SCREEN_SIZE_X/2, SCREEN_SIZE_Y/2));
-    creditsBack.draw();
-    LCD.Update();
-
-    waitForBackButtonPress();
 }
 
 void waitForBackButtonPress() {

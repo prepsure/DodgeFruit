@@ -10,7 +10,9 @@
 // a small delta (used for comparing floats due to floating point inaccuracies)
 #define DELTA 0.00001
 
-
+/*
+ * A 2D Vector class used to control positions and sizes of sprites on the screen
+ */
 class Vector2 {
     public:
         Vector2(float x = 0, float y = 0) {
@@ -73,6 +75,7 @@ class Vector2 {
             return !(*this == that);
         }
 
+        // puts the vector in the form "(x, y)"
         std::string toString() {
             return "(" + std::to_string(this->x_) + ", " + std::to_string(this->y_) + ")";
         }
