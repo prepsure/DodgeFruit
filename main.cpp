@@ -159,7 +159,7 @@ void doGameplayLoop() {
         lastTime = TimeNow();
 
         // create new fruit
-        if (TimeNow() - lastFruitSpawnTime > 5) {
+        if (TimeNow() - lastFruitSpawnTime > 3) {
             projectiles.push_back(makeRandomFruit());
             lastFruitSpawnTime = TimeNow();
         }
@@ -167,11 +167,8 @@ void doGameplayLoop() {
         //increment timer
         playerTime = playerTime + dt;
 
-        //debug
-        cout << playerTime << endl;
-
         //write current time to top right corner of screen
-        LCD.WriteAt(playerTime, 240, 10);
+        LCD.WriteAt(playerTime, 250, 10);
 
         // update screen
         LCD.Update();
@@ -204,7 +201,7 @@ void doGameplayLoop() {
 
 Fruit* makeRandomFruit() {
     // list all possible fruits
-    string fruits[] = {LEMON, APPLE, WATERMELON};
+    string fruits[] = {LEMON, APPLE, WATERMELON, TANGERINE};
     // choose a random one
     string chosenFruit = fruits[Random.RandInt() % 3];
 
@@ -216,7 +213,7 @@ Fruit* makeRandomFruit() {
 
     // make the fruit and scale it
     Fruit* newFruit = new Fruit(chosenFruit, speed, spawnPos);
-    newFruit->sprite()->anchorPoint(Vector2(0.5, 0.5));
+    newFruit->sprite()->anchorPoint(Vector2(0.5, 0.5));//
     newFruit->sprite()->scale(2);
 
     return newFruit;
@@ -336,13 +333,13 @@ float playerHighScore() {
     ifstream playerTimeFile;
     playerTimeFile.open("playerTimeFile.txt");
     
-    float score = 0, highScore=0;
+    float score, highScore=0;
     while (playerTimeFile >> score){
         if (highScore < score) {
-            score = highScore;
+            highScore = score;
         }
     }
-    cout << highScore;
+
     playerTimeFile.close();
 
     return highScore;
@@ -358,7 +355,7 @@ int gameCount() {
     while (playerTimeFile >> temp){
         counter++;
     }
-    cout << counter;
+
     playerTimeFile.close();
 
     return counter;

@@ -31,7 +31,7 @@ using namespace std;
 #define APPLE "apple"
 Vector2 applepos(float t, Vector2 offset);
 
-#define TANGARINE "tangerine"
+#define TANGERINE "tangerine"
 Vector2 tangerinePos(float t, Vector2 offset);
 
 #define STRAWBERRY "strawberry"
@@ -64,6 +64,8 @@ class Fruit {
                 sprite_.move(watermelonpos(t_, offset_));
             } else if (type_ == LEMON) {
                 sprite_.move(lemonpos(t_, offset_));
+            } else if (type_ == TANGERINE) {
+                sprite_.move(tangerinePos(t_, offset_));
             }
         }
 
@@ -86,7 +88,7 @@ Vector2 applepos(float t, Vector2 offset) {
 
 // diamond
 Vector2 tangerinePos(float t, Vector2 offset) {
-    return Vector2();
+    return Vector2(SCREEN_SIZE_Y/2 * t, -1.0/((int)offset.y() % 10) * t * SCREEN_SIZE_Y/2);
 }
 
 // sin wave

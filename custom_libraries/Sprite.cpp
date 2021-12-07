@@ -50,8 +50,6 @@ class Sprite {
             int pixelCount = 0;
             int next;
 
-            cout << spriteSize.x() << endl;
-
             while(sprFile >> next){
                 int x = pixelCount / (int)spriteSize.x();
                 int y = pixelCount % (int)spriteSize.x();
