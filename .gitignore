@@ -1,5 +1,4 @@
 /simulator_libraries
-*.exe
 *.o
 *.d
 playerTimeFile.txt
